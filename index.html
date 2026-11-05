@@ -1,1 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f97316">
+  <title>Zaamarket | Boutique en ligne</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f8f8;
+      color: #171717;
+    }
+
+    header {
+      background: #111;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      color: #f97316;
+      font-size: 30px;
+    }
+
+    header p {
+      margin-top: 7px;
+      font-size: 13px;
+    }
+
+    nav {
+      background: #222;
+      padding: 13px;
+      display: flex;
+      justify-content: center;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .hero {
+      background: #111;
+      color: white;
+      padding: 45px 20px;
+      text-align: center;
+    }
+
+    .hero h2 {
+      font-size: 29px;
+      margin-bottom: 15px;
+    }
+
+    .hero span {
+      color: #f97316;
+    }
+
+    .hero p {
+      line-height: 1.6;
+      margin-bottom: 22px;
+    }
+
+    .hero a {
+      display: inline-block;
+      background: #f97316;
+      color: white;
+      padding: 13px 25px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .categories {
+      padding: 30px 15px;
+      text-align: center;
+    }
+
+    .categories h2,
+    .products h2 {
+      margin-bottom: 20px;
+    }
+
+    .category-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .category {
+      background: white;
+      padding: 20px 8px;
+      border-radius: 9px;
+      font-weight: bold;
+      border: 1px solid #eee;
+    }
+
+    .products {
+      padding: 25px 15px 40px;
+      text-align: center;
+    }
+
+    .empty {
+      background: white;
+      padding: 30px 15px;
+      border-radius: 9px;
+      color: #666;
+    }
+
+    footer {
+      background: #111;
+      color: white;
+      text-align: center;
+      padding: 25px 15px;
+      line-height: 1.8;
+    }
+
+    footer span {
+      color: #f97316;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>ZAAMARKET</h1>
+    <p>Tout ce dont vous avez besoin, au même endroit.</p>
+  </header>
+
+  <nav>
+    <a href="#accueil">Accueil</a>
+    <a href="#categories">Catégories</a>
+    <a href="#boutique">Boutique</a>
+  </nav>
+
+  <section class="hero" id="accueil">
+    <h2>Bienvenue chez <span>Zaamarket</span></h2>
+    <p>
+      Découvrez une nouvelle façon de faire vos achats.
+      Des produits variés et accessibles à tous.
+    </p>
+    <a href="#boutique">Découvrir la boutique</a>
+  </section>
+
+  <section class="categories" id="categories">
+    <h2>Nos catégories</h2>
+
+    <div class="category-list">
+      <div class="category">👗 Vêtements</div>
+      <div class="category">👟 Chaussures</div>
+      <div class="category">💄 Cosmétiques</div>
+      <div class="category">📱 Téléphones et accessoires</div>
+      <div class="category">🏠 Maison et cuisine</div>
+      <div class="category">👜 Mode et accessoires</div>
+    </div>
+  </section>
+
+  <section class="products" id="boutique">
+    <h2>Notre boutique</h2>
+    <div class="empty">
+      Nos premiers produits arrivent bientôt !
+    </div>
+  </section>
+
+  <footer>
+    <h3><span>ZAAMARKET</span></h3>
+    <p>Une plateforme africaine et ambitieuse.</p>
+    <p>© 2026 Zaamarket. Tous droits réservés.</p>
+  </footer>
+
+</body>
+</html>
 
