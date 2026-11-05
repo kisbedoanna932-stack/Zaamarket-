@@ -108,7 +108,42 @@ footer p{color:#bbb;font-size:13px}
 <div class="section-heading">
 <h2>Explorer les catégories</h2>
 </div>
-<div class="categories">
+
+<div class="category" onclick="showAllProducts()">
+  <span class="emoji">🛍️</span>
+  <strong>Tous les produits</strong>
+</div>
+
+<div class="category" onclick="filterProducts('Vêtements')">
+  <span class="emoji">👗</span>
+  <strong>Vêtements</strong>
+</div>
+
+<div class="category" onclick="filterProducts('Chaussures')">
+  <span class="emoji">👟</span>
+  <strong>Chaussures</strong>
+</div>
+
+<div class="category" onclick="filterProducts('Cosmétiques')">
+  <span class="emoji">💄</span>
+  <strong>Cosmétiques</strong>
+</div>
+
+<div class="category" onclick="filterProducts('Téléphones')">
+  <span class="emoji">📱</span>
+  <strong>Téléphones et accessoires</strong>
+</div>
+
+<div class="category" onclick="filterProducts('Maison')">
+  <span class="emoji">🏠</span>
+  <strong>Maison et cuisine</strong>
+</div>
+
+<div class="category" onclick="filterProducts('Accessoires')">
+  <span class="emoji">👜</span>
+  <strong>Mode et accessoires</strong>
+</div>
+  
 <div class="category" onclick="filterProducts('Vêtements')"><span class="emoji">👗</span><strong>Vêtements</strong></div>
 <div class="category" onclick="filterProducts('Chaussures')"><span class="emoji">👟</span><strong>Chaussures</strong></div>
 <div class="category" onclick="filterProducts('Cosmétiques')"><span class="emoji">💄</span><strong>Cosmétiques</strong></div>
