@@ -187,7 +187,14 @@ footer p{color:#bbb;font-size:13px}
 </footer>
 
 <script>
-let cartCount = 0;
+let cartCount = 0;const SUPABASE_URL = "https://kzqnaycenzirheupiffx.supabase.co";
+
+const SUPABASE_KEY =sb_publishable_17wxs-0Oa9Hf-IiAtHKIMQ__RR0ms_1
+
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 let activeCategory = "";
 
 function addCart(){
