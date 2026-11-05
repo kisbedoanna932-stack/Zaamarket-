@@ -234,32 +234,51 @@ cartCount++;
 document.getElementById("cartCount").textContent=cartCount;
 alert("Produit ajouté au panier de démonstration !");
 }
-function showAllProducts(){
+let activeCategory = "";
+
+function applyFilters(){
+  let query = document.getElementById("searchInput").value.toLowerCase().trim();
   let products = document.querySelectorAll(".product");
+  let count = 0;
 
   products.forEach(product => {
-    product.style.display = "block";
+    let categoryMatch = !activeCategory ||
+      product.dataset.category === activeCategory;
+
+    let searchMatch = product.innerText.toLowerCase().includes(query);
+
+    let visible = categoryMatch && searchMatch;
+
+    product.style.display = visible ? "block" : "none";
+
+    if(visible) count++;
   });
 
-  document.getElementById("emptyMessage").style.display = "none";
+  document.getElementById("emptyMessage").style.display =
+    count ? "none" : "block";
+}
+
+function showAllProducts(){
+  activeCategory = "";
+  applyFilters();
 
   document.getElementById("boutique").scrollIntoView({
     behavior: "smooth"
   });
-  }
+}
+
 function filterProducts(category){
-let products=document.querySelectorAll(".product");
-let count=0;
-products.forEach(product=>{
-let visible=product.dataset.category===category;
-product.style.display=visible?"block":"none";
-if(visible)count++;
-});
-document.getElementById("emptyMessage").style.display=count?"none":"block";
-document.getElementById("boutique").scrollIntoView({behavior:"smooth"});
+  activeCategory = category;
+  applyFilters();
+
+  document.getElementById("boutique").scrollIntoView({
+    behavior: "smooth"
+  });
 }
 
 function searchProducts(){
+  applyFilters();
+}
 let query=document.getElementById("searchInput").value.toLowerCase().trim();
 let products=document.querySelectorAll(".product");
 let count=0;
