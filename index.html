@@ -4,21 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#111111">
-<title>Zaamarket - La marketplace africaine</title>
+<title>Zaamarket - Marketplace africaine</title>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#f7f7f7;color:#171717}
 :root{--orange:#f97316;--black:#111}
+body{font-family:Arial,sans-serif;background:#f7f7f7;color:#171717}
 a{text-decoration:none;color:inherit}
 button{cursor:pointer;border:0;font-weight:bold}
-header{background:var(--black);color:white;padding:17px 5%;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+header{background:#111;color:white;padding:17px 5%;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
 .logo{font-size:27px;font-weight:900;color:var(--orange)}
 .logo span{color:white}
-.header-links{display:flex;gap:18px;align-items:center;flex-wrap:wrap;font-size:14px}
+.header-links{display:flex;gap:15px;align-items:center;flex-wrap:wrap;font-size:14px}
 .header-links a:hover{color:var(--orange)}
 .cart{background:var(--orange);padding:11px 15px;border-radius:7px;color:white}
-.hero{background:linear-gradient(120deg,#111,#29211c);color:white;padding:65px 6%;display:flex;align-items:center;justify-content:space-between;gap:25px;flex-wrap:wrap}
+.hero{background:linear-gradient(120deg,#111,#29211c);color:white;padding:60px 6%;display:flex;align-items:center;justify-content:space-between;gap:25px;flex-wrap:wrap}
 .hero-content{max-width:600px}
 .hero small{color:#ffad70;font-weight:bold;letter-spacing:2px}
 .hero h1{font-size:clamp(32px,6vw,52px);margin:18px 0;line-height:1.15}
@@ -44,8 +44,9 @@ section{padding:30px 5%}
 .product-info{padding:14px}
 .product-info h3{font-size:15px;margin-bottom:9px}
 .price{font-weight:bold;color:var(--orange);margin-bottom:12px}
-.product-info button{background:var(--black);color:white;padding:10px;border-radius:6px;width:100%}
+.product-info button{background:#111;color:white;padding:10px;border-radius:6px;width:100%}
 .product-info button:hover{background:var(--orange)}
+.empty{display:none;text-align:center;padding:30px;background:white;border-radius:10px}
 .seller-section{background:#171717;color:white;margin:25px 5%;border-radius:14px;padding:35px 25px;text-align:center}
 .seller-section h2{font-size:26px;margin-bottom:13px}
 .seller-section p{color:#ddd;line-height:1.6;margin-bottom:22px}
@@ -57,9 +58,8 @@ section{padding:30px 5%}
 footer{background:#111;color:white;padding:35px 5%;text-align:center;line-height:2}
 footer span{color:var(--orange)}
 footer p{color:#bbb;font-size:13px}
-.empty{display:none;text-align:center;padding:30px;background:white;border-radius:10px}
 @media(min-width:800px){
-.categories{grid-template-columns:repeat(6,1fr)}
+.categories{grid-template-columns:repeat(4,1fr)}
 .product-grid{grid-template-columns:repeat(4,1fr)}
 }
 @media(max-width:450px){
@@ -74,7 +74,6 @@ footer p{color:#bbb;font-size:13px}
 </head>
 
 <body>
-
 <header>
 <a href="#" class="logo">ZAA<span>MARKET</span></a>
 <div class="header-links">
@@ -105,52 +104,17 @@ footer p{color:#bbb;font-size:13px}
 </div>
 
 <section id="categories">
-  <div class="categories">
 <div class="section-heading">
 <h2>Explorer les catégories</h2>
 </div>
-
-<div class="category" onclick="showAllProducts()">
-  <span class="emoji">🛍️</span>
-  <strong>Tous les produits</strong>
-</div>
-
-<div class="category" onclick="filterProducts('Vêtements')">
-  <span class="emoji">👗</span>
-  <strong>Vêtements</strong>
-</div>
-
-<div class="category" onclick="filterProducts('Chaussures')">
-  <span class="emoji">👟</span>
-  <strong>Chaussures</strong>
-</div>
-
-<div class="category" onclick="filterProducts('Cosmétiques')">
-  <span class="emoji">💄</span>
-  <strong>Cosmétiques</strong>
-</div>
-
-<div class="category" onclick="filterProducts('Téléphones')">
-  <span class="emoji">📱</span>
-  <strong>Téléphones et accessoires</strong>
-</div>
-
-<div class="category" onclick="filterProducts('Maison')">
-  <span class="emoji">🏠</span>
-  <strong>Maison et cuisine</strong>
-</div>
-
-<div class="category" onclick="filterProducts('Accessoires')">
-  <span class="emoji">👜</span>
-  <strong>Mode et accessoires</strong>
-</div>
-  
+<div class="categories">
+<div class="category" onclick="showAllProducts()"><span class="emoji">🛍️</span><strong>Tous les produits</strong></div>
 <div class="category" onclick="filterProducts('Vêtements')"><span class="emoji">👗</span><strong>Vêtements</strong></div>
 <div class="category" onclick="filterProducts('Chaussures')"><span class="emoji">👟</span><strong>Chaussures</strong></div>
 <div class="category" onclick="filterProducts('Cosmétiques')"><span class="emoji">💄</span><strong>Cosmétiques</strong></div>
-<div class="category" onclick="filterProducts('Téléphones')"><span class="emoji">📱</span><strong>Téléphones</strong></div>
-<div class="category" onclick="filterProducts('Maison')"><span class="emoji">🏠</span><strong>Maison</strong></div>
-<div class="category" onclick="filterProducts('Accessoires')"><span class="emoji">👜</span><strong>Accessoires</strong></div>
+<div class="category" onclick="filterProducts('Téléphones')"><span class="emoji">📱</span><strong>Téléphones et accessoires</strong></div>
+<div class="category" onclick="filterProducts('Maison')"><span class="emoji">🏠</span><strong>Maison et cuisine</strong></div>
+<div class="category" onclick="filterProducts('Accessoires')"><span class="emoji">👜</span><strong>Mode et accessoires</strong></div>
 </div>
 </section>
 
@@ -163,38 +127,19 @@ footer p{color:#bbb;font-size:13px}
 <div class="product-grid" id="productGrid">
 <div class="product" data-category="Vêtements">
 <div class="product-picture">👕</div>
-<div class="product-info">
-<h3>T-shirt tendance</h3>
-<div class="price">Prix à définir</div>
-<button onclick="addCart()">Ajouter au panier</button>
+<div class="product-info"><h3>T-shirt tendance</h3><div class="price">Prix à définir</div><button onclick="addCart()">Ajouter au panier</button></div>
 </div>
-</div>
-
 <div class="product" data-category="Chaussures">
 <div class="product-picture">👟</div>
-<div class="product-info">
-<h3>Baskets modernes</h3>
-<div class="price">Prix à définir</div>
-<button onclick="addCart()">Ajouter au panier</button>
+<div class="product-info"><h3>Baskets modernes</h3><div class="price">Prix à définir</div><button onclick="addCart()">Ajouter au panier</button></div>
 </div>
-</div>
-
 <div class="product" data-category="Cosmétiques">
 <div class="product-picture">💄</div>
-<div class="product-info">
-<h3>Produits de beauté</h3>
-<div class="price">Prix à définir</div>
-<button onclick="addCart()">Ajouter au panier</button>
+<div class="product-info"><h3>Produits de beauté</h3><div class="price">Prix à définir</div><button onclick="addCart()">Ajouter au panier</button></div>
 </div>
-</div>
-
 <div class="product" data-category="Téléphones">
 <div class="product-picture">📱</div>
-<div class="product-info">
-<h3>Accessoires téléphone</h3>
-<div class="price">Prix à définir</div>
-<button onclick="addCart()">Ajouter au panier</button>
-</div>
+<div class="product-info"><h3>Accessoires téléphone</h3><div class="price">Prix à définir</div><button onclick="addCart()">Ajouter au panier</button></div>
 </div>
 </div>
 <div class="empty" id="emptyMessage">Aucun produit trouvé.</div>
@@ -208,9 +153,7 @@ footer p{color:#bbb;font-size:13px}
 </div>
 
 <section>
-<div class="section-heading">
-<h2>Pourquoi choisir Zaamarket ?</h2>
-</div>
+<div class="section-heading"><h2>Pourquoi choisir Zaamarket ?</h2></div>
 <div class="benefits">
 <div class="benefit"><div>🌍</div><strong>Une marketplace africaine</strong></div>
 <div class="benefit"><div>🤝</div><strong>Des vendeurs vérifiés</strong></div>
@@ -227,14 +170,14 @@ footer p{color:#bbb;font-size:13px}
 </footer>
 
 <script>
-let cartCount=0;
+let cartCount = 0;
+let activeCategory = "";
 
 function addCart(){
-cartCount++;
-document.getElementById("cartCount").textContent=cartCount;
-alert("Produit ajouté au panier de démonstration !");
+  cartCount++;
+  document.getElementById("cartCount").textContent = cartCount;
+  alert("Produit ajouté au panier de démonstration !");
 }
-let activeCategory = "";
 
 function applyFilters(){
   let query = document.getElementById("searchInput").value.toLowerCase().trim();
@@ -244,54 +187,35 @@ function applyFilters(){
   products.forEach(product => {
     let categoryMatch = !activeCategory ||
       product.dataset.category === activeCategory;
-
     let searchMatch = product.innerText.toLowerCase().includes(query);
-
     let visible = categoryMatch && searchMatch;
 
     product.style.display = visible ? "block" : "none";
-
     if(visible) count++;
   });
 
   document.getElementById("emptyMessage").style.display =
-    count ? "none" : "block";
+    count > 0 ? "none" : "block";
 }
 
 function showAllProducts(){
   activeCategory = "";
+  document.getElementById("searchInput").value = "";
   applyFilters();
-
-  document.getElementById("boutique").scrollIntoView({
-    behavior: "smooth"
-  });
+  document.getElementById("boutique").scrollIntoView({behavior:"smooth"});
 }
 
 function filterProducts(category){
   activeCategory = category;
   applyFilters();
-
-  document.getElementById("boutique").scrollIntoView({
-    behavior: "smooth"
-  });
+  document.getElementById("boutique").scrollIntoView({behavior:"smooth"});
 }
 
 function searchProducts(){
   applyFilters();
 }
-let query=document.getElementById("searchInput").value.toLowerCase().trim();
-let products=document.querySelectorAll(".product");
-let count=0;
-products.forEach(product=>{
-let visible=product.innerText.toLowerCase().includes(query);
-product.style.display=visible?"block":"none";
-if(visible)count++;
-});
-document.getElementById("emptyMessage").style.display=count?"none":"block";
-}
 
-document.getElementById("searchInput").addEventListener("input",searchProducts);
+document.getElementById("searchInput").addEventListener("input", searchProducts);
 </script>
-
 </body>
 </html>
