@@ -336,6 +336,7 @@ async function approuverProduit(id){
 }
 
 async function demarrer(){
+ message("Le JavaScript fonctionne. Test de connexion à Supabase...");
  await chargerCategories();
  await chargerProduits();
  const {data:{user}}=await db.auth.getUser();
