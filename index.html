@@ -234,7 +234,19 @@ cartCount++;
 document.getElementById("cartCount").textContent=cartCount;
 alert("Produit ajouté au panier de démonstration !");
 }
+function showAllProducts(){
+  let products = document.querySelectorAll(".product");
 
+  products.forEach(product => {
+    product.style.display = "block";
+  });
+
+  document.getElementById("emptyMessage").style.display = "none";
+
+  document.getElementById("boutique").scrollIntoView({
+    behavior: "smooth"
+  });
+  }
 function filterProducts(category){
 let products=document.querySelectorAll(".product");
 let count=0;
