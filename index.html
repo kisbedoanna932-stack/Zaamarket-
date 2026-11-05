@@ -2,244 +2,343 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#111111">
-<title>Zaamarket - Marketplace africaine</title>
-
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--orange:#f97316;--black:#111}
-body{font-family:Arial,sans-serif;background:#f7f7f7;color:#171717}
-a{text-decoration:none;color:inherit}
-button{cursor:pointer;border:0;font-weight:bold}
-header{background:#111;color:white;padding:17px 5%;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
-.logo{font-size:27px;font-weight:900;color:var(--orange)}
-.logo span{color:white}
-.header-links{display:flex;gap:15px;align-items:center;flex-wrap:wrap;font-size:14px}
-.header-links a:hover{color:var(--orange)}
-.cart{background:var(--orange);padding:11px 15px;border-radius:7px;color:white}
-.hero{background:linear-gradient(120deg,#111,#29211c);color:white;padding:60px 6%;display:flex;align-items:center;justify-content:space-between;gap:25px;flex-wrap:wrap}
-.hero-content{max-width:600px}
-.hero small{color:#ffad70;font-weight:bold;letter-spacing:2px}
-.hero h1{font-size:clamp(32px,6vw,52px);margin:18px 0;line-height:1.15}
-.hero h1 span{color:var(--orange)}
-.hero p{color:#ddd;line-height:1.7;margin-bottom:25px}
-.primary{background:var(--orange);color:white;padding:14px 23px;border-radius:7px;display:inline-block}
-.hero-box{font-size:85px;background:#ffffff12;border:1px solid #ffffff25;border-radius:20px;padding:30px}
-.search-area{max-width:900px;margin:-23px auto 25px;padding:0 15px}
-.search-box{background:white;display:flex;padding:8px;border-radius:10px;box-shadow:0 4px 20px #00000015}
-.search-box input{flex:1;min-width:0;border:0;outline:0;padding:12px;font-size:15px}
-.search-box button{background:var(--orange);color:white;padding:12px 20px;border-radius:7px}
-section{padding:30px 5%}
-.section-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:22px;flex-wrap:wrap}
-.section-heading h2{font-size:23px}
-.categories{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
-.category{background:white;border:1px solid #eee;border-radius:10px;padding:20px 8px;text-align:center;cursor:pointer;transition:.2s}
-.category:hover{border-color:var(--orange);transform:translateY(-3px)}
-.category .emoji{font-size:32px;display:block;margin-bottom:10px}
-.category strong{font-size:13px}
-.product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
-.product{background:white;border-radius:10px;overflow:hidden;border:1px solid #eee}
-.product-picture{height:145px;background:#fff0e5;display:grid;place-items:center;font-size:65px}
-.product-info{padding:14px}
-.product-info h3{font-size:15px;margin-bottom:9px}
-.price{font-weight:bold;color:var(--orange);margin-bottom:12px}
-.product-info button{background:#111;color:white;padding:10px;border-radius:6px;width:100%}
-.product-info button:hover{background:var(--orange)}
-.empty{display:none;text-align:center;padding:30px;background:white;border-radius:10px}
-.seller-section{background:#171717;color:white;margin:25px 5%;border-radius:14px;padding:35px 25px;text-align:center}
-.seller-section h2{font-size:26px;margin-bottom:13px}
-.seller-section p{color:#ddd;line-height:1.6;margin-bottom:22px}
-.seller-section span{color:var(--orange)}
-.benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center}
-.benefit{background:white;border:1px solid #eee;border-radius:10px;padding:20px 10px}
-.benefit div{font-size:30px;margin-bottom:10px}
-.benefit strong{font-size:14px}
-footer{background:#111;color:white;padding:35px 5%;text-align:center;line-height:2}
-footer span{color:var(--orange)}
-footer p{color:#bbb;font-size:13px}
-@media(min-width:800px){
-.categories{grid-template-columns:repeat(4,1fr)}
-.product-grid{grid-template-columns:repeat(4,1fr)}
-}
-@media(max-width:450px){
-.header-links{gap:11px;font-size:12px}
-.hero{padding:45px 6%}
-.hero-box{font-size:55px;padding:18px}
-.categories{grid-template-columns:repeat(2,1fr)}
-.product-grid{grid-template-columns:repeat(2,1fr)}
-.product-picture{height:115px;font-size:48px}
-}
-</style>
-</style>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zaamarket - La marketplace africaine</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f7f7f7;color:#222}
+header{background:#171717;color:white;padding:18px}
+.logo{font-size:25px;font-weight:bold;color:#ff7900}
+nav{display:flex;gap:15px;flex-wrap:wrap;margin-top:15px}
+button{background:#ff7900;color:white;border:0;padding:12px 16px;border-radius:7px;cursor:pointer;font-weight:bold}
+button:hover{background:#e66d00}
+input,select,textarea{width:100%;padding:12px;margin:7px 0 14px;border:1px solid #ccc;border-radius:6px}
+main{max-width:1100px;margin:auto;padding:18px}
+.hero{background:#171717;color:white;padding:35px 20px;border-radius:12px;margin:18px 0}
+.hero h1{color:#ff7900}
+section{background:white;padding:18px;border-radius:10px;margin:18px 0}
+h2{color:#e66d00}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:13px}
+.card{border:1px solid #eee;border-radius:9px;padding:12px;background:white}
+.card img{width:100%;height:140px;object-fit:cover;border-radius:7px}
+.price{font-weight:bold;color:#e66d00;font-size:18px}
+.hidden{display:none}
+footer{text-align:center;background:#171717;color:white;padding:25px;margin-top:30px}
+.small{font-size:13px;color:#777}
+</style>
 </head>
-</head>
-
 <body>
+
 <header>
-<a href="#" class="logo">ZAA<span>MARKET</span></a>
-<div class="header-links">
-<a href="#accueil">Accueil</a>
-<a href="#categories">Catégories</a>
-<a href="#boutique">Boutique</a>
-<a href="#vendeurs">Vendeurs</a>
-<button class="cart" onclick="alert('Le panier sera bientôt disponible.')">🛒 Panier (<span id="cartCount">0</span>)</button>
-</div>
+<div class="logo">ZAAMARKET</div>
+<div>Tout ce dont vous avez besoin, au même endroit.</div>
+<nav>
+<button onclick="show('accueil')">Accueil</button>
+<button onclick="show('catalogue')">Produits</button>
+<button onclick="show('connexion')">Connexion</button>
+<button onclick="show('vendeur')">Devenir vendeur</button>
+<button onclick="show('panier')">Panier (<span id="compteur">0</span>)</button>
+<button onclick="show('admin')">Administration</button>
+</nav>
 </header>
 
 <main>
-<div class="hero" id="accueil">
-<div class="hero-content">
-<small>LA MARKETPLACE AFRICAINE</small>
-<h1>Bienvenue sur <span>Zaamarket</span></h1>
-<p>Découvrez des milliers de possibilités. Achetez et vendez facilement, partout en Afrique de l'Ouest.</p>
-<a class="primary" href="#boutique">Découvrir nos produits →</a>
-</div>
-<div class="hero-box">🛍️</div>
-</div>
+<div id="message"></div>
 
-<div class="search-area">
-<div class="search-box">
-<input type="search" id="searchInput" placeholder="Que recherchez-vous ?">
-<button onclick="searchProducts()">Rechercher</button>
+<div id="accueil">
+<div class="hero">
+<h1>Bienvenue sur Zaamarket</h1>
+<p>Découvrez des produits et des boutiques du Burkina Faso et de toute l'Afrique de l'Ouest.</p>
+<button onclick="show('catalogue')">Découvrir les produits</button>
 </div>
-</div>
-
-<section id="categories">
-<div class="section-heading">
-<h2>Explorer les catégories</h2>
-</div>
-<div class="categories">
-<div class="category" onclick="showAllProducts()"><span class="emoji">🛍️</span><strong>Tous les produits</strong></div>
-<div class="category" onclick="filterProducts('Vêtements')"><span class="emoji">👗</span><strong>Vêtements</strong></div>
-<div class="category" onclick="filterProducts('Chaussures')"><span class="emoji">👟</span><strong>Chaussures</strong></div>
-<div class="category" onclick="filterProducts('Cosmétiques')"><span class="emoji">💄</span><strong>Cosmétiques et beauté</strong></div>
-<div class="category" onclick="filterProducts('Téléphones')"><span class="emoji">📱</span><strong>Téléphones et accessoires</strong></div>
-<div class="category" onclick="filterProducts('Informatique')"><span class="emoji">💻</span><strong>Informatique et électronique</strong></div>
-<div class="category" onclick="filterProducts('Maison')"><span class="emoji">🏠</span><strong>Maison et cuisine</strong></div>
-<div class="category" onclick="filterProducts('Électroménager')"><span class="emoji">🧊</span><strong>Électroménager</strong></div>
-<div class="category" onclick="filterProducts('Alimentation')"><span class="emoji">🍎</span><strong>Alimentation et boissons</strong></div>
-<div class="category" onclick="filterProducts('Bébé')"><span class="emoji">🍼</span><strong>Bébé et enfants</strong></div>
-<div class="category" onclick="filterProducts('Santé')"><span class="emoji">🩺</span><strong>Santé et bien-être</strong></div>
-<div class="category" onclick="filterProducts('Sports')"><span class="emoji">⚽</span><strong>Sports et loisirs</strong></div>
-<div class="category" onclick="filterProducts('Livres')"><span class="emoji">📚</span><strong>Livres et fournitures scolaires</strong></div>
-<div class="category" onclick="filterProducts('Bijoux')"><span class="emoji">💍</span><strong>Bijoux et montres</strong></div>
-<div class="category" onclick="filterProducts('Sacs')"><span class="emoji">👜</span><strong>Sacs et accessoires</strong></div>
-<div class="category" onclick="filterProducts('Automobile')"><span class="emoji">🚗</span><strong>Automobile et accessoires</strong></div>
-<div class="category" onclick="filterProducts('Agriculture')"><span class="emoji">🌱</span><strong>Agriculture et jardinage</strong></div>
-<div class="category" onclick="filterProducts('Jeux')"><span class="emoji">🧸</span><strong>Jeux et jouets</strong></div>
-<div class="category" onclick="filterProducts('Bricolage')"><span class="emoji">🛠️</span><strong>Bricolage et outils</strong></div>
-<div class="category" onclick="filterProducts('Accessoires')"><span class="emoji">🧢</span><strong>Mode et accessoires</strong></div>
-</div>
-
-<section id="boutique">
-<div class="section-heading">
-<h2>Nos produits</h2>
-<a href="#vendeurs" style="color:#f97316;font-weight:bold">Devenir vendeur →</a>
-</div>
-
-<div class="product-grid" id="productGrid">
-<div class="product" data-category="Vêtements">
-<div class="product-picture">👕</div>
-<div class="product-info"><h3>T-shirt tendance</h3><div class="price">Prix à définir</div><button onclick="addCart()">Ajouter au panier</button></div>
-</div>
-<div class="product" data-category="Chaussures">
-<div class="product-picture">👟</div>
-<div class="product-info"><h3>Baskets modernes</h3><div class="price">Prix à définir</div><button onclick="addCart()">Ajouter au panier</button></div>
-</div>
-<div class="product" data-category="Cosmétiques">
-<div class="product-picture">💄</div>
-<div class="product-info"><h3>Produits de beauté</h3><div class="price">Prix à définir</div><button onclick="addCart()">Ajouter au panier</button></div>
-</div>
-<div class="product" data-category="Téléphones">
-<div class="product-picture">📱</div>
-<div class="product-info"><h3>Accessoires téléphone</h3><div class="price">Prix à définir</div><button onclick="addCart()">Ajouter au panier</button></div>
-</div>
-</div>
-<div class="empty" id="emptyMessage">Aucun produit trouvé.</div>
-</section>
-
-<div class="seller-section" id="vendeurs">
-<h2>Vous êtes commerçant ?</h2>
-<p>Rejoignez <span>Zaamarket</span> et développez votre activité au Burkina Faso et dans toute l'Afrique de l'Ouest.</p>
-<a class="primary" href="mailto:contact@zaamarket.com?subject=Demande%20vendeur%20Zaamarket">Devenir vendeur</a>
-<p style="font-size:12px;margin-top:15px">Les boutiques seront soumises à validation avant toute mise en vente.</p>
-</div>
-
 <section>
-<div class="section-heading"><h2>Pourquoi choisir Zaamarket ?</h2></div>
-<div class="benefits">
-<div class="benefit"><div>🌍</div><strong>Une marketplace africaine</strong></div>
-<div class="benefit"><div>🤝</div><strong>Des vendeurs vérifiés</strong></div>
-<div class="benefit"><div>🛍️</div><strong>Un grand choix</strong></div>
-</div>
+<h2>Nos catégories</h2>
+<div id="categories" class="grid">Chargement...</div>
 </section>
+<section>
+<h2>Produits disponibles</h2>
+<div id="accueilProduits" class="grid">Chargement...</div>
+</section>
+</div>
+
+<div id="catalogue" class="hidden">
+<section>
+<h2>Tous les produits</h2>
+<input id="recherche" placeholder="Rechercher un produit..." oninput="filtrer()">
+<select id="filtreCategorie" onchange="filtrer()">
+<option value="">Toutes les catégories</option>
+</select>
+<div id="produits" class="grid"></div>
+</section>
+</div>
+
+<div id="connexion" class="hidden">
+<section>
+<h2>Connexion</h2>
+<input id="email" type="email" placeholder="Adresse e-mail">
+<input id="password" type="password" placeholder="Mot de passe">
+<button onclick="connexion()">Se connecter</button>
+<hr>
+<h2>Créer un compte client</h2>
+<input id="nom" placeholder="Nom complet">
+<input id="telephone" placeholder="Téléphone">
+<input id="emailInscription" type="email" placeholder="Adresse e-mail">
+<input id="passwordInscription" type="password" placeholder="Mot de passe (6 caractères minimum)">
+<button onclick="inscription()">Créer mon compte</button>
+<button onclick="deconnexion()">Se déconnecter</button>
+</section>
+</div>
+
+<div id="vendeur" class="hidden">
+<section>
+<h2>Ouvrir une boutique</h2>
+<p>Chaque boutique doit être approuvée par Zaamarket avant de pouvoir vendre.</p>
+<input id="nomBoutique" placeholder="Nom de la boutique">
+<textarea id="descriptionBoutique" placeholder="Décrivez votre boutique"></textarea>
+<input id="paysBoutique" value="Burkina Faso" placeholder="Pays">
+<button onclick="creerBoutique()">Envoyer ma demande</button>
+</section>
+<section>
+<h2>Ajouter un produit</h2>
+<input id="nomProduit" placeholder="Nom du produit">
+<textarea id="descriptionProduit" placeholder="Description"></textarea>
+<input id="prixProduit" type="number" placeholder="Prix en FCFA">
+<input id="stockProduit" type="number" placeholder="Stock disponible">
+<input id="imageProduit" placeholder="Lien direct de l'image">
+<select id="categorieProduit"></select>
+<button onclick="ajouterProduit()">Envoyer le produit pour validation</button>
+</section>
+</div>
+
+<div id="panier" class="hidden">
+<section>
+<h2>Mon panier</h2>
+<div id="contenuPanier"></div>
+<p id="totalPanier"></p>
+<p class="small">Le paiement et la validation des commandes seront activés après la configuration sécurisée du système de commande.</p>
+</section>
+</div>
+
+<div id="admin" class="hidden">
+<section>
+<h2>Administration Zaamarket</h2>
+<p>Connecte-toi avec ton compte administrateur pour gérer les demandes.</p>
+<button onclick="chargerAdmin()">Actualiser</button>
+<h3>Boutiques à approuver</h3>
+<div id="boutiquesAdmin"></div>
+<h3>Produits à approuver</h3>
+<div id="produitsAdmin"></div>
+</section>
+</div>
 </main>
 
 <footer>
-<h2><span>ZAAMARKET</span></h2>
-<p>Tout ce dont vous avez besoin, au même endroit.</p>
-<p>Une plateforme africaine et ambitieuse.</p>
-<p>© 2026 Zaamarket. Tous droits réservés.</p>
+<strong>ZAAMARKET</strong>
+<p>La marketplace qui rapproche les vendeurs et les acheteurs africains.</p>
 </footer>
 
 <script>
-let cartCount = 0;const SUPABASE_URL = "https://kzqnaycenzirheupiffx.supabase.co";
-
+const SUPABASE_URL = "https://kzqnaycenzirheupiffx.supabase.co";
 const SUPABASE_KEY =sb_publishable_17wxs-0Oa9Hf-IiAtHKIMQ__RR0ms_1
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const db = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
-let activeCategory = "";
+let listeProduits = [];
+let listeCategories = [];
+let panier = [];
 
-function addCart(){
-  cartCount++;
-  document.getElementById("cartCount").textContent = cartCount;
-  alert("Produit ajouté au panier de démonstration !");
+function message(texte){
+ document.getElementById("message").innerHTML =
+ '<section>'+texte+'</section>';
+ window.scrollTo(0,0);
 }
 
-function applyFilters(){
-  let query = document.getElementById("searchInput").value.toLowerCase().trim();
-  let products = document.querySelectorAll(".product");
-  let count = 0;
-
-  products.forEach(product => {
-    let categoryMatch = !activeCategory ||
-      product.dataset.category === activeCategory;
-    let searchMatch = product.innerText.toLowerCase().includes(query);
-    let visible = categoryMatch && searchMatch;
-
-    product.style.display = visible ? "block" : "none";
-    if(visible) count++;
-  });
-
-  document.getElementById("emptyMessage").style.display =
-    count > 0 ? "none" : "block";
+function show(id){
+ document.querySelectorAll("main > div").forEach(x=>x.classList.add("hidden"));
+ document.getElementById(id).classList.remove("hidden");
 }
 
-function showAllProducts(){
-  activeCategory = "";
-  document.getElementById("searchInput").value = "";
-  applyFilters();
-  document.getElementById("boutique").scrollIntoView({behavior:"smooth"});
+async function chargerCategories(){
+ const {data,error}=await db.from("categories").select("*").order("id");
+ if(error){message("Erreur catégories : "+error.message);return;}
+ listeCategories=data||[];
+ document.getElementById("categories").innerHTML=listeCategories.map(c=>
+ '<div class="card">'+(c.emoji||"🛍️")+' '+c.name+'</div>'
+ ).join("");
+ const options=listeCategories.map(c=>
+ '<option value="'+c.id+'">'+c.name+'</option>'
+ ).join("");
+ document.getElementById("filtreCategorie").innerHTML=
+ '<option value="">Toutes les catégories</option>'+options;
+ document.getElementById("categorieProduit").innerHTML=options;
 }
 
-function filterProducts(category){
-  activeCategory = category;
-  applyFilters();
-  document.getElementById("boutique").scrollIntoView({behavior:"smooth"});
+async function chargerProduits(){
+ const {data,error}=await db.from("products")
+ .select("*,categories(name),stores!inner(name,status)")
+ .eq("status","active")
+ .eq("stores.status","approved")
+ .order("created_at",{ascending:false});
+ if(error){console.log(error);return;}
+ listeProduits=data||[];
+ afficherProduits(listeProduits);
+ document.getElementById("accueilProduits").innerHTML=
+ cartes(listeProduits.slice(0,4));
 }
 
-function searchProducts(){
-  applyFilters();
+function cartes(liste){
+ if(!liste.length)return "<p>Aucun produit disponible pour le moment.</p>";
+ return liste.map(p=>`
+ <div class="card">
+ <img src="${p.image_url||'https://placehold.co/300x200?text=Zaamarket'}" alt="">
+ <h3>${echapper(p.name)}</h3>
+ <p>${echapper(p.categories?.name||"")}</p>
+ <p class="price">${Number(p.price).toLocaleString("fr-FR")} FCFA</p>
+ <button onclick="ajouterPanier('${p.id}')">Ajouter au panier</button>
+ </div>`).join("");
 }
 
-document.getElementById("searchInput").addEventListener("input", searchProducts);
+function afficherProduits(liste){
+ document.getElementById("produits").innerHTML=cartes(liste);
+}
+
+function filtrer(){
+ const recherche=document.getElementById("recherche").value.toLowerCase();
+ const categorie=document.getElementById("filtreCategorie").value;
+ afficherProduits(listeProduits.filter(p=>
+ p.name.toLowerCase().includes(recherche)&&
+ (!categorie||String(p.category_id)===categorie)
+ ));
+}
+
+function echapper(s){
+ return String(s||"").replace(/[&<>"']/g,c=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
+
+async function inscription(){
+ const full_name=document.getElementById("nom").value.trim();
+ const phone=document.getElementById("telephone").value.trim();
+ const email=document.getElementById("emailInscription").value.trim();
+ const password=document.getElementById("passwordInscription").value;
+ if(!full_name||!email||password.length<6){message("Remplis les champs. Le mot de passe doit contenir au moins 6 caractères.");return;}
+ const {data,error}=await db.auth.signUp({
+ email,password,options:{data:{full_name,phone}}
+ });
+ if(error){message(error.message);return;}
+ if(data.user){
+ await db.from("profiles").upsert({id:data.user.id,full_name,phone});
+ }
+ message("Inscription envoyée. Vérifie ton e-mail si une confirmation est demandée.");
+}
+
+async function connexion(){
+ const email=document.getElementById("email").value.trim();
+ const password=document.getElementById("password").value;
+ const {error}=await db.auth.signInWithPassword({email,password});
+ if(error){message(error.message);return;}
+ message("Connexion réussie !");
+}
+
+async function deconnexion(){
+ const {error}=await db.auth.signOut();
+ message(error?error.message:"Déconnexion effectuée.");
+}
+
+async function creerBoutique(){
+ const {data:{user}}=await db.auth.getUser();
+ if(!user){message("Connecte-toi d'abord.");show("connexion");return;}
+ const name=document.getElementById("nomBoutique").value.trim();
+ const description=document.getElementById("descriptionBoutique").value.trim();
+ const country=document.getElementById("paysBoutique").value.trim();
+ if(!name){message("Entre le nom de ta boutique.");return;}
+ const {error}=await db.from("stores").insert({
+ owner_id:user.id,name,description,country,status:"pending"
+ });
+ message(error?error.message:"Demande envoyée. Attends l'approbation de Zaamarket.");
+}
+
+async function ajouterProduit(){
+ const {data:{user}}=await db.auth.getUser();
+ if(!user){message("Connecte-toi d'abord.");show("connexion");return;}
+ const {data:store,error:storeError}=await db.from("stores")
+ .select("id").eq("owner_id",user.id).eq("status","approved").limit(1).maybeSingle();
+ if(storeError||!store){message("Ta boutique doit d'abord être approuvée.");return;}
+ const name=document.getElementById("nomProduit").value.trim();
+ const description=document.getElementById("descriptionProduit").value.trim();
+ const price=Number(document.getElementById("prixProduit").value);
+ const stock=Number(document.getElementById("stockProduit").value);
+ const image_url=document.getElementById("imageProduit").value.trim();
+ const category_id=Number(document.getElementById("categorieProduit").value);
+ if(!name||price<=0||stock<0||!category_id){message("Vérifie les informations du produit.");return;}
+ const {error}=await db.from("products").insert({
+ store_id:store.id,name,description,price,stock,image_url,category_id,status:"pending"
+ });
+ message(error?error.message:"Produit envoyé pour validation.");
+}
+
+function ajouterPanier(id){
+ const p=listeProduits.find(x=>x.id===id);
+ if(!p)return;
+ panier.push(p);
+ document.getElementById("compteur").textContent=panier.length;
+ afficherPanier();
+ message("Produit ajouté au panier.");
+}
+
+function afficherPanier(){
+ const zone=document.getElementById("contenuPanier");
+ zone.innerHTML=panier.map(p=>`
+ <p>${echapper(p.name)} — ${Number(p.price).toLocaleString("fr-FR")} FCFA</p>
+ `).join("")||"Ton panier est vide.";
+ const total=panier.reduce((s,p)=>s+Number(p.price),0);
+ document.getElementById("totalPanier").textContent=
+ "Total : "+total.toLocaleString("fr-FR")+" FCFA";
+}
+
+async function chargerAdmin(){
+ const {data:{user}}=await db.auth.getUser();
+ if(!user){message("Connecte-toi d'abord.");show("connexion");return;}
+ const {data:admin,error}=await db.from("app_admins")
+ .select("user_id").eq("user_id",user.id).maybeSingle();
+ if(error||!admin){message("Accès réservé à l'administrateur.");return;}
+ const {data:stores}=await db.from("stores").select("*").eq("status","pending");
+ document.getElementById("boutiquesAdmin").innerHTML=(stores||[]).map(s=>`
+ <div class="card">
+ <b>${echapper(s.name)}</b>
+ <p>${echapper(s.description)}</p>
+ <button onclick="approuverBoutique('${s.id}')">Approuver</button>
+ </div>`).join("")||"Aucune demande de boutique.";
+ const {data:products}=await db.from("products").select("*").eq("status","pending");
+ document.getElementById("produitsAdmin").innerHTML=(products||[]).map(p=>`
+ <div class="card">
+ <b>${echapper(p.name)}</b>
+ <p>${Number(p.price).toLocaleString("fr-FR")} FCFA</p>
+ <button onclick="approuverProduit('${p.id}')">Approuver</button>
+ </div>`).join("")||"Aucun produit en attente.";
+}
+
+async function approuverBoutique(id){
+ const {error}=await db.from("stores").update({status:"approved"}).eq("id",id);
+ message(error?error.message:"Boutique approuvée.");
+ chargerAdmin();
+}
+
+async function approuverProduit(id){
+ const {error}=await db.from("products").update({status:"active"}).eq("id",id);
+ message(error?error.message:"Produit approuvé.");
+ chargerAdmin();
+}
+
+async function demarrer(){
+ await chargerCategories();
+ await chargerProduits();
+ const {data:{user}}=await db.auth.getUser();
+ if(user)console.log("Utilisateur connecté :",user.id);
+}
+
+demarrer();
 </script>
 </body>
 </html>
