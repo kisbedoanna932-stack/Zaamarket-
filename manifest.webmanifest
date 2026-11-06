@@ -1,0 +1,17 @@
+{
+  "name": "Zaamarket",
+  "short_name": "Zaamarket",
+  "description": "La marketplace africaine",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#f47721",
+  "icons": [
+    {
+      "src": "./assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
