@@ -1,349 +1,182 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Zaamarket - La marketplace africaine</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f7f7f7;color:#222}
-header{background:#171717;color:white;padding:18px}
-.logo{font-size:25px;font-weight:bold;color:#ff7900}
-nav{display:flex;gap:15px;flex-wrap:wrap;margin-top:15px}
-button{background:#ff7900;color:white;border:0;padding:12px 16px;border-radius:7px;cursor:pointer;font-weight:bold}
-button:hover{background:#e66d00}
-input,select,textarea{width:100%;padding:12px;margin:7px 0 14px;border:1px solid #ccc;border-radius:6px}
-main{max-width:1100px;margin:auto;padding:18px}
-.hero{background:#171717;color:white;padding:35px 20px;border-radius:12px;margin:18px 0}
-.hero h1{color:#ff7900}
-section{background:white;padding:18px;border-radius:10px;margin:18px 0}
-h2{color:#e66d00}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:13px}
-.card{border:1px solid #eee;border-radius:9px;padding:12px;background:white}
-.card img{width:100%;height:140px;object-fit:cover;border-radius:7px}
-.price{font-weight:bold;color:#e66d00;font-size:18px}
-.hidden{display:none}
-footer{text-align:center;background:#171717;color:white;padding:25px;margin-top:30px}
-.small{font-size:13px;color:#777}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f47721">
+  <title>Zaamarket — La marketplace africaine</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <style>
+    :root{--orange:#f47721;--ink:#171717;--paper:#fff;--muted:#707070;--line:#ececec}
+    *{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#fafafa;color:var(--ink)}
+    header{background:var(--ink);color:white;padding:16px 5%;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .brand{font-size:1.45rem;font-weight:800}.brand span{color:var(--orange)}
+    nav{display:flex;gap:14px;flex-wrap:wrap}nav a{color:white;text-decoration:none;font-size:.94rem}
+    main{max-width:1150px;margin:auto;padding:22px 16px}
+    .hero{background:linear-gradient(120deg,#171717,#333);color:white;padding:32px 24px;border-radius:16px}
+    .hero h1{font-size:clamp(1.7rem,5vw,2.8rem);margin:0 0 10px}.hero p{color:#eee;max-width:650px;line-height:1.5}
+    .btn{border:0;border-radius:9px;background:var(--orange);color:#171717;padding:11px 16px;font-weight:700;cursor:pointer}
+    .btn.dark{background:#171717;color:white}.btn.light{background:white;border:1px solid var(--line)}
+    section{margin:26px 0}.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+    h2{font-size:1.35rem;margin:0 0 14px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:12px}
+    .category,.product,.panel{background:white;border:1px solid var(--line);border-radius:12px;padding:14px}
+    .category{cursor:pointer;text-align:center;font-weight:700}.category:hover,.product:hover{border-color:var(--orange)}
+    .product img{width:100%;height:145px;object-fit:cover;border-radius:8px;background:#f0f0f0}
+    .product h3{font-size:1rem;margin:10px 0 6px}.price{font-weight:800;color:#c6530c}
+    .muted{color:var(--muted);font-size:.9rem}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    input,select,textarea{width:100%;padding:11px;border:1px solid #ddd;border-radius:8px;font:inherit;margin:5px 0 12px;background:white}
+    label{font-size:.9rem;font-weight:700}.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+    .hidden{display:none!important}.notice{padding:12px;border-radius:8px;background:#fff2e8;color:#783600;margin:12px 0}
+    footer{text-align:center;color:var(--muted);padding:30px 12px}
+    @media(max-width:520px){header{align-items:flex-start}nav{gap:10px}.hero{padding:25px 18px}}
+  </style>
 </head>
 <body>
-
 <header>
-<div class="logo">ZAAMARKET</div>
-<div>Tout ce dont vous avez besoin, au même endroit.</div>
-<nav>
-<button onclick="show('accueil')">Accueil</button>
-<button onclick="show('catalogue')">Produits</button>
-<button onclick="show('connexion')">Connexion</button>
-<button onclick="show('vendeur')">Devenir vendeur</button>
-<button onclick="show('panier')">Panier (<span id="compteur">0</span>)</button>
-<button onclick="show('admin')">Administration</button>
-</nav>
+  <div class="brand">ZAA<span>MARKET</span></div>
+  <nav>
+    <a href="#accueil">Accueil</a><a href="#catalogue">Produits</a><a href="#vendeur">Devenir vendeur</a><a href="#compte">Connexion</a><a href="#panier">Panier (<span id="cartCount">0</span>)</a>
+  </nav>
 </header>
-
 <main>
-<div id="message"></div>
+  <div id="message" aria-live="polite"></div>
+  <section id="accueil" class="hero">
+    <h1>Tout ce dont vous avez besoin, au même endroit.</h1>
+    <p>Découvrez des produits proposés par des vendeurs du Burkina Faso et de l’Afrique de l’Ouest. Des prix accessibles, du choix et une marketplace qui grandit avec vous.</p>
+    <a href="#catalogue"><button class="btn">Découvrir les produits</button></a>
+  </section>
 
-<div id="accueil">
-<div class="hero">
-<h1>Bienvenue sur Zaamarket</h1>
-<p>Découvrez des produits et des boutiques du Burkina Faso et de toute l'Afrique de l'Ouest.</p>
-<button onclick="show('catalogue')">Découvrir les produits</button>
-</div>
-<section>
-<h2>Nos catégories</h2>
-<div id="categories" class="grid">Chargement...</div>
-</section>
-<section>
-<h2>Produits disponibles</h2>
-<div id="accueilProduits" class="grid">Chargement...</div>
-</section>
-</div>
+  <section>
+    <div class="section-head"><h2>Catégories</h2><span class="muted">Choisissez une catégorie</span></div>
+    <div id="categories" class="grid"><p class="muted">Chargement des catégories…</p></div>
+  </section>
 
-<div id="catalogue" class="hidden">
-<section>
-<h2>Tous les produits</h2>
-<input id="recherche" placeholder="Rechercher un produit..." oninput="filtrer()">
-<select id="filtreCategorie" onchange="filtrer()">
-<option value="">Toutes les catégories</option>
-</select>
-<div id="produits" class="grid"></div>
-</section>
-</div>
+  <section id="catalogue">
+    <div class="section-head"><h2>Nos produits</h2><button class="btn light" id="resetFilter">Tout afficher</button></div>
+    <div class="form-grid">
+      <input id="search" placeholder="Rechercher un produit…" aria-label="Rechercher">
+      <select id="categoryFilter"><option value="">Toutes les catégories</option></select>
+    </div>
+    <div id="products" class="grid"><p class="muted">Chargement des produits…</p></div>
+  </section>
 
-<div id="connexion" class="hidden">
-<section>
-<h2>Connexion</h2>
-<input id="email" type="email" placeholder="Adresse e-mail">
-<input id="password" type="password" placeholder="Mot de passe">
-<button onclick="connexion()">Se connecter</button>
-<hr>
-<h2>Créer un compte client</h2>
-<input id="nom" placeholder="Nom complet">
-<input id="telephone" placeholder="Téléphone">
-<input id="emailInscription" type="email" placeholder="Adresse e-mail">
-<input id="passwordInscription" type="password" placeholder="Mot de passe (6 caractères minimum)">
-<button onclick="inscription()">Créer mon compte</button>
-<button onclick="deconnexion()">Se déconnecter</button>
-</section>
-</div>
+  <section id="panier" class="panel">
+    <div class="section-head"><h2>Mon panier</h2><button class="btn light" id="clearCart">Vider le panier</button></div>
+    <div id="cartItems" class="muted">Votre panier est vide.</div>
+    <p><strong>Total indicatif : <span id="cartTotal">0</span> FCFA</strong></p>
+    <p class="muted">La validation et le paiement en ligne ne sont pas encore activés dans cette version.</p>
+  </section>
 
-<div id="vendeur" class="hidden">
-<section>
-<h2>Ouvrir une boutique</h2>
-<p>Chaque boutique doit être approuvée par Zaamarket avant de pouvoir vendre.</p>
-<input id="nomBoutique" placeholder="Nom de la boutique">
-<textarea id="descriptionBoutique" placeholder="Décrivez votre boutique"></textarea>
-<input id="paysBoutique" value="Burkina Faso" placeholder="Pays">
-<button onclick="creerBoutique()">Envoyer ma demande</button>
-</section>
-<section>
-<h2>Ajouter un produit</h2>
-<input id="nomProduit" placeholder="Nom du produit">
-<textarea id="descriptionProduit" placeholder="Description"></textarea>
-<input id="prixProduit" type="number" placeholder="Prix en FCFA">
-<input id="stockProduit" type="number" placeholder="Stock disponible">
-<input id="imageProduit" placeholder="Lien direct de l'image">
-<select id="categorieProduit"></select>
-<button onclick="ajouterProduit()">Envoyer le produit pour validation</button>
-</section>
-</div>
+  <section id="compte" class="panel">
+    <h2>Créer un compte ou se connecter</h2>
+    <div id="accountStatus" class="muted">Vous n’êtes pas connecté.</div>
+    <div class="form-grid">
+      <div><label for="email">Adresse e-mail</label><input id="email" type="email" autocomplete="email" placeholder="exemple@email.com"></div>
+      <div><label for="password">Mot de passe</label><input id="password" type="password" autocomplete="current-password" placeholder="Au moins 6 caractères"></div>
+    </div>
+    <div class="row"><button class="btn" id="signup">Créer un compte</button><button class="btn dark" id="login">Se connecter</button><button class="btn light hidden" id="logout">Se déconnecter</button></div>
+  </section>
 
-<div id="panier" class="hidden">
-<section>
-<h2>Mon panier</h2>
-<div id="contenuPanier"></div>
-<p id="totalPanier"></p>
-<p class="small">Le paiement et la validation des commandes seront activés après la configuration sécurisée du système de commande.</p>
-</section>
-</div>
+  <section id="vendeur" class="panel">
+    <h2>Devenir vendeur</h2>
+    <p class="muted">Connectez-vous, puis envoyez votre demande. Votre boutique devra être approuvée par l’administration avant toute vente.</p>
+    <label for="storeName">Nom de la boutique</label><input id="storeName" placeholder="Nom de votre boutique">
+    <label for="storeDescription">Description</label><textarea id="storeDescription" rows="3" placeholder="Présentez votre boutique"></textarea>
+    <label for="storeCountry">Pays</label><select id="storeCountry"><option>Burkina Faso</option><option>Bénin</option><option>Côte d’Ivoire</option><option>Ghana</option><option>Mali</option><option>Niger</option><option>Sénégal</option><option>Togo</option><option>Autre pays d’Afrique de l’Ouest</option></select>
+    <button class="btn" id="createStore">Envoyer ma demande</button>
+  </section>
 
-<div id="admin" class="hidden">
-<section>
-<h2>Administration Zaamarket</h2>
-<p>Connecte-toi avec ton compte administrateur pour gérer les demandes.</p>
-<button onclick="chargerAdmin()">Actualiser</button>
-<h3>Boutiques à approuver</h3>
-<div id="boutiquesAdmin"></div>
-<h3>Produits à approuver</h3>
-<div id="produitsAdmin"></div>
-</section>
-</div>
+  <section id="admin" class="panel hidden">
+    <h2>Administration</h2>
+    <p class="muted">Cette zone apparaît uniquement pour un compte enregistré dans la table app_admins.</p>
+    <div class="section-head"><h3>Boutiques en attente</h3><button class="btn light" id="refreshAdmin">Actualiser</button></div>
+    <div id="pendingStores" class="muted">Chargement…</div>
+    <h3>Produits en attente</h3><div id="pendingProducts" class="muted">Chargement…</div>
+  </section>
 </main>
+<footer>© <span id="year"></span> Zaamarket — La marketplace africaine</footer>
 
-<footer>
-<strong>ZAAMARKET</strong>
-<p>La marketplace qui rapproche les vendeurs et les acheteurs africains.</p>
-</footer>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SUPABASE_URL = "https://kzqnaycenzirheupiffx.supabase.co";
- window.addEventListener("error", function(e) {
-  document.getElementById("message").innerHTML =
-    "<section>Erreur JavaScript : " + e.message + "</section>";
-});
-const SUPABASE_KEY = sb_publishable_17wxs-0Oa9Hf-IiAtHKIMQ__RR0ms_1
-const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+/*
+  CONFIGURATION : remplace uniquement les deux valeurs ci-dessous.
+  SUPABASE_KEY doit être la clé publique publishable sb_publishable_...
+  ou l'ancienne clé anon. Ne mets JAMAIS une clé sb_secret/service_role ici.
+*/
+const SUPABASE_URL = "https://VOTRE-PROJET.supabase.co";
+const SUPABASE_KEY = "VOTRE_CLE_PUBLIQUE_SUPABASE";
 
-let listeProduits = [];
-let listeCategories = [];
-let panier = [];
-
-function message(texte){
- document.getElementById("message").innerHTML =
- '<section>'+texte+'</section>';
- window.scrollTo(0,0);
+let db = null, currentUser = null, cart = [], allProducts = [], allCategories = [];
+const $ = id => document.getElementById(id);
+const money = n => Number(n || 0).toLocaleString("fr-FR");
+function notify(message, error=false){$("message").innerHTML = `<div class="notice" role="status">${escapeHtml(message)}</div>`; if(error) console.error(message);}
+function escapeHtml(value){return String(value ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function configured(){return SUPABASE_URL.includes(".supabase.co") && !SUPABASE_URL.includes("VOTRE-PROJET") && SUPABASE_KEY.length>20 && !SUPABASE_KEY.includes("VOTRE_CLE");}
+async function start(){
+  $("year").textContent = new Date().getFullYear();
+  if(!window.supabase){notify("Impossible de charger la bibliothèque Supabase. Vérifiez votre connexion Internet.",true);return;}
+  if(!configured()){notify("Configuration nécessaire : ajoutez l’URL du projet et la clé publique Supabase dans index.html.");$("categories").innerHTML="<p class='muted'>En attente de la configuration Supabase.</p>";$("products").innerHTML="";return;}
+  db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+  const {data:{session}}=await db.auth.getSession(); currentUser=session?.user||null;
+  await refreshAccount(); await loadCategories(); await loadProducts();
+  db.auth.onAuthStateChange(async (_event,session)=>{currentUser=session?.user||null;await refreshAccount();});
 }
-
-function show(id){
- document.querySelectorAll("main > div").forEach(x=>x.classList.add("hidden"));
- document.getElementById(id).classList.remove("hidden");
+async function loadCategories(){
+  const {data,error}=await db.from("categories").select("id,name,emoji").order("id");
+  if(error){$("categories").innerHTML="";notify("Erreur catégories : "+error.message,true);return;}
+  allCategories=data||[];
+  $("categories").innerHTML=allCategories.map(c=>`<button class="category" data-cat="${c.id}">${escapeHtml(c.emoji||"🛍️")}<br>${escapeHtml(c.name)}</button>`).join("")||"<p class='muted'>Aucune catégorie pour le moment.</p>";
+  $("categoryFilter").innerHTML='<option value="">Toutes les catégories</option>'+allCategories.map(c=>`<option value="${c.id}">${escapeHtml(c.name)}</option>`).join("");
+  document.querySelectorAll("[data-cat]").forEach(b=>b.addEventListener("click",()=>{$("categoryFilter").value=b.dataset.cat;renderProducts();$("catalogue").scrollIntoView();}));
 }
-
-async function chargerCategories(){
- const {data,error}=await db.from("categories").select("*").order("id");
- if(error){message("Erreur catégories : "+error.message);return;}
- listeCategories=data||[];
- document.getElementById("categories").innerHTML=listeCategories.map(c=>
- '<div class="card">'+(c.emoji||"🛍️")+' '+c.name+'</div>'
- ).join("");
- const options=listeCategories.map(c=>
- '<option value="'+c.id+'">'+c.name+'</option>'
- ).join("");
- document.getElementById("filtreCategorie").innerHTML=
- '<option value="">Toutes les catégories</option>'+options;
- document.getElementById("categorieProduit").innerHTML=options;
+async function loadProducts(){
+  const {data,error}=await db.from("products").select("id,name,description,price,image_url,stock,category_id,stores!inner(name,status)").eq("status","active").eq("stores.status","approved").order("created_at",{ascending:false});
+  if(error){$("products").innerHTML="";notify("Erreur produits : "+error.message,true);return;}
+  allProducts=data||[];renderProducts();
 }
-
-async function chargerProduits(){
- const {data,error}=await db.from("products")
- .select("*,categories(name),stores!inner(name,status)")
- .eq("status","active")
- .eq("stores.status","approved")
- .order("created_at",{ascending:false});
- if(error){console.log(error);return;}
- listeProduits=data||[];
- afficherProduits(listeProduits);
- document.getElementById("accueilProduits").innerHTML=
- cartes(listeProduits.slice(0,4));
+function renderProducts(){
+  const term=$("search").value.trim().toLowerCase(), cat=$("categoryFilter").value;
+  const list=allProducts.filter(p=>(!cat||String(p.category_id)===cat)&&(!term||(p.name||"").toLowerCase().includes(term)||(p.description||"").toLowerCase().includes(term)));
+  $("products").innerHTML=list.map(p=>`<article class="product">
+    <img src="${escapeHtml(p.image_url||"https://placehold.co/500x400?text=Zaamarket")}" alt="${escapeHtml(p.name)}" loading="lazy" onerror="this.src='https://placehold.co/500x400?text=Produit'">
+    <h3>${escapeHtml(p.name)}</h3><div class="muted">${escapeHtml(p.stores?.name||"Boutique")}</div>
+    <p class="price">${money(p.price)} FCFA</p><p class="muted">${escapeHtml(p.description||"")}</p>
+    <button class="btn" data-add="${p.id}">Ajouter au panier</button></article>`).join("")||"<p class='muted'>Aucun produit trouvé.</p>";
+  document.querySelectorAll("[data-add]").forEach(b=>b.addEventListener("click",()=>addToCart(b.dataset.add)));
 }
-
-function cartes(liste){
- if(!liste.length)return "<p>Aucun produit disponible pour le moment.</p>";
- return liste.map(p=>`
- <div class="card">
- <img src="${p.image_url||'https://placehold.co/300x200?text=Zaamarket'}" alt="">
- <h3>${echapper(p.name)}</h3>
- <p>${echapper(p.categories?.name||"")}</p>
- <p class="price">${Number(p.price).toLocaleString("fr-FR")} FCFA</p>
- <button onclick="ajouterPanier('${p.id}')">Ajouter au panier</button>
- </div>`).join("");
+function addToCart(id){const p=allProducts.find(x=>x.id===id);if(!p)return;const found=cart.find(x=>x.id===id);if(found)found.quantity++;else cart.push({id:p.id,name:p.name,price:Number(p.price),quantity:1});renderCart();}
+function renderCart(){$("cartCount").textContent=cart.reduce((s,x)=>s+x.quantity,0);$("cartItems").innerHTML=cart.length?cart.map(x=>`<p>${escapeHtml(x.name)} × ${x.quantity} — ${money(x.price*x.quantity)} FCFA <button class="btn light" data-remove="${x.id}">Retirer</button></p>`).join(""):"Votre panier est vide.";$("cartTotal").textContent=money(cart.reduce((s,x)=>s+x.price*x.quantity,0));document.querySelectorAll("[data-remove]").forEach(b=>b.addEventListener("click",()=>{cart=cart.filter(x=>x.id!==b.dataset.remove);renderCart();}));}
+async function refreshAccount(){
+  $("accountStatus").textContent=currentUser?"Connecté : "+currentUser.email:"Vous n’êtes pas connecté.";
+  $("logout").classList.toggle("hidden",!currentUser);
+  if(!db||!currentUser){$("admin").classList.add("hidden");return;}
+  const {data}=await db.from("app_admins").select("user_id").eq("user_id",currentUser.id).maybeSingle();
+  $("admin").classList.toggle("hidden",!data);
+  if(data)await loadAdmin();
 }
-
-function afficherProduits(liste){
- document.getElementById("produits").innerHTML=cartes(liste);
+async function signup(){const email=$("email").value.trim(),password=$("password").value;if(!email||password.length<6){notify("Saisissez un e-mail valide et un mot de passe d’au moins 6 caractères.",true);return;}const {error}=await db.auth.signUp({email,password});if(error)notify(error.message,true);else notify("Inscription envoyée. Vérifiez votre e-mail si la confirmation est demandée.");}
+async function login(){const {error}=await db.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});if(error)notify(error.message,true);else notify("Connexion réussie.");}
+async function logout(){const {error}=await db.auth.signOut();if(error)notify(error.message,true);else notify("Vous êtes déconnecté.");}
+async function createStore(){
+  if(!currentUser){notify("Connectez-vous avant de demander l’ouverture d’une boutique.",true);return;}
+  const name=$("storeName").value.trim();if(!name){notify("Saisissez le nom de votre boutique.",true);return;}
+  const {error}=await db.from("stores").insert({owner_id:currentUser.id,name,description:$("storeDescription").value.trim(),country:$("storeCountry").value,status:"pending"});
+  if(error)notify("Demande non envoyée : "+error.message,true);else{notify("Votre demande a été envoyée. Attendez l’approbation de l’administration.");$("storeName").value="";$("storeDescription").value="";}
 }
-
-function filtrer(){
- const recherche=document.getElementById("recherche").value.toLowerCase();
- const categorie=document.getElementById("filtreCategorie").value;
- afficherProduits(listeProduits.filter(p=>
- p.name.toLowerCase().includes(recherche)&&
- (!categorie||String(p.category_id)===categorie)
- ));
+async function loadAdmin(){
+  const {data:stores,error:sErr}=await db.from("stores").select("id,name,country,created_at").eq("status","pending").order("created_at");
+  $("pendingStores").innerHTML=sErr?escapeHtml(sErr.message):(stores||[]).map(s=>`<p><strong>${escapeHtml(s.name)}</strong> — ${escapeHtml(s.country)} <button class="btn" data-approve-store="${s.id}">Approuver</button></p>`).join("")||"Aucune boutique en attente.";
+  const {data:products,error:pErr}=await db.from("products").select("id,name,price,stores(name)").eq("status","pending").order("created_at");
+  $("pendingProducts").innerHTML=pErr?escapeHtml(pErr.message):(products||[]).map(p=>`<p><strong>${escapeHtml(p.name)}</strong> — ${money(p.price)} FCFA <button class="btn" data-approve-product="${p.id}">Approuver</button></p>`).join("")||"Aucun produit en attente.";
+  document.querySelectorAll("[data-approve-store]").forEach(b=>b.addEventListener("click",()=>approve("stores",b.dataset.approveStore)));
+  document.querySelectorAll("[data-approve-product]").forEach(b=>b.addEventListener("click",()=>approve("products",b.dataset.approveProduct)));
 }
-
-function echapper(s){
- return String(s||"").replace(/[&<>"']/g,c=>({
- "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
- }[c]));
-}
-
-async function inscription(){
- const full_name=document.getElementById("nom").value.trim();
- const phone=document.getElementById("telephone").value.trim();
- const email=document.getElementById("emailInscription").value.trim();
- const password=document.getElementById("passwordInscription").value;
- if(!full_name||!email||password.length<6){message("Remplis les champs. Le mot de passe doit contenir au moins 6 caractères.");return;}
- const {data,error}=await db.auth.signUp({
- email,password,options:{data:{full_name,phone}}
- });
- if(error){message(error.message);return;}
- if(data.user){
- await db.from("profiles").upsert({id:data.user.id,full_name,phone});
- }
- message("Inscription envoyée. Vérifie ton e-mail si une confirmation est demandée.");
-}
-
-async function connexion(){
- const email=document.getElementById("email").value.trim();
- const password=document.getElementById("password").value;
- const {error}=await db.auth.signInWithPassword({email,password});
- if(error){message(error.message);return;}
- message("Connexion réussie !");
-}
-
-async function deconnexion(){
- const {error}=await db.auth.signOut();
- message(error?error.message:"Déconnexion effectuée.");
-}
-
-async function creerBoutique(){
- const {data:{user}}=await db.auth.getUser();
- if(!user){message("Connecte-toi d'abord.");show("connexion");return;}
- const name=document.getElementById("nomBoutique").value.trim();
- const description=document.getElementById("descriptionBoutique").value.trim();
- const country=document.getElementById("paysBoutique").value.trim();
- if(!name){message("Entre le nom de ta boutique.");return;}
- const {error}=await db.from("stores").insert({
- owner_id:user.id,name,description,country,status:"pending"
- });
- message(error?error.message:"Demande envoyée. Attends l'approbation de Zaamarket.");
-}
-
-async function ajouterProduit(){
- const {data:{user}}=await db.auth.getUser();
- if(!user){message("Connecte-toi d'abord.");show("connexion");return;}
- const {data:store,error:storeError}=await db.from("stores")
- .select("id").eq("owner_id",user.id).eq("status","approved").limit(1).maybeSingle();
- if(storeError||!store){message("Ta boutique doit d'abord être approuvée.");return;}
- const name=document.getElementById("nomProduit").value.trim();
- const description=document.getElementById("descriptionProduit").value.trim();
- const price=Number(document.getElementById("prixProduit").value);
- const stock=Number(document.getElementById("stockProduit").value);
- const image_url=document.getElementById("imageProduit").value.trim();
- const category_id=Number(document.getElementById("categorieProduit").value);
- if(!name||price<=0||stock<0||!category_id){message("Vérifie les informations du produit.");return;}
- const {error}=await db.from("products").insert({
- store_id:store.id,name,description,price,stock,image_url,category_id,status:"pending"
- });
- message(error?error.message:"Produit envoyé pour validation.");
-}
-
-function ajouterPanier(id){
- const p=listeProduits.find(x=>x.id===id);
- if(!p)return;
- panier.push(p);
- document.getElementById("compteur").textContent=panier.length;
- afficherPanier();
- message("Produit ajouté au panier.");
-}
-
-function afficherPanier(){
- const zone=document.getElementById("contenuPanier");
- zone.innerHTML=panier.map(p=>`
- <p>${echapper(p.name)} — ${Number(p.price).toLocaleString("fr-FR")} FCFA</p>
- `).join("")||"Ton panier est vide.";
- const total=panier.reduce((s,p)=>s+Number(p.price),0);
- document.getElementById("totalPanier").textContent=
- "Total : "+total.toLocaleString("fr-FR")+" FCFA";
-}
-
-async function chargerAdmin(){
- const {data:{user}}=await db.auth.getUser();
- if(!user){message("Connecte-toi d'abord.");show("connexion");return;}
- const {data:admin,error}=await db.from("app_admins")
- .select("user_id").eq("user_id",user.id).maybeSingle();
- if(error||!admin){message("Accès réservé à l'administrateur.");return;}
- const {data:stores}=await db.from("stores").select("*").eq("status","pending");
- document.getElementById("boutiquesAdmin").innerHTML=(stores||[]).map(s=>`
- <div class="card">
- <b>${echapper(s.name)}</b>
- <p>${echapper(s.description)}</p>
- <button onclick="approuverBoutique('${s.id}')">Approuver</button>
- </div>`).join("")||"Aucune demande de boutique.";
- const {data:products}=await db.from("products").select("*").eq("status","pending");
- document.getElementById("produitsAdmin").innerHTML=(products||[]).map(p=>`
- <div class="card">
- <b>${echapper(p.name)}</b>
- <p>${Number(p.price).toLocaleString("fr-FR")} FCFA</p>
- <button onclick="approuverProduit('${p.id}')">Approuver</button>
- </div>`).join("")||"Aucun produit en attente.";
-}
-
-async function approuverBoutique(id){
- const {error}=await db.from("stores").update({status:"approved"}).eq("id",id);
- message(error?error.message:"Boutique approuvée.");
- chargerAdmin();
-}
-
-async function approuverProduit(id){
- const {error}=await db.from("products").update({status:"active"}).eq("id",id);
- message(error?error.message:"Produit approuvé.");
- chargerAdmin();
-}
-
-async function demarrer(){
- message("Le JavaScript fonctionne. Test de connexion à Supabase...");
- await chargerCategories();
- await chargerProduits();
- const {data:{user}}=await db.auth.getUser();
- if(user)console.log("Utilisateur connecté :",user.id);
-}
-
-demarrer();
+async function approve(table,id){const {error}=await db.from(table).update({status:"active"}).eq("id",id);if(error)notify("Approbation impossible : "+error.message,true);else{notify("Élément approuvé.");await loadAdmin();await loadProducts();}}
+$("signup").addEventListener("click",()=>signup());$("login").addEventListener("click",()=>login());$("logout").addEventListener("click",()=>logout());$("createStore").addEventListener("click",()=>createStore());$("refreshAdmin").addEventListener("click",()=>loadAdmin());
+$("search").addEventListener("input",renderProducts);$("categoryFilter").addEventListener("change",renderProducts);$("resetFilter").addEventListener("click",()=>{$("search").value="";$("categoryFilter").value="";renderProducts();});
+$("clearCart").addEventListener("click",()=>{cart=[];renderCart();});
+start().catch(e=>notify("Erreur de démarrage : "+e.message,true));
+if("serviceWorker" in navigator && location.protocol.startsWith("http"))window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(()=>{}));
 </script>
 </body>
 </html>
