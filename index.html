@@ -74,7 +74,16 @@
       <div><label for="email">Adresse e-mail</label><input id="email" type="email" autocomplete="email" placeholder="exemple@email.com"></div>
       <div><label for="password">Mot de passe</label><input id="password" type="password" autocomplete="current-password" placeholder="Au moins 6 caractères"></div>
     </div>
-    <div class="row"><button class="btn" id="signup">Créer un compte</button><button class="btn dark" id="login">Se connecter</button><button class="btn light hidden" id="logout">Se déconnecter</button></div>
+   <div class="row"><button class="btn" id="signup">Créer un compte</button><button class="btn dark" id="login">Se connecter</button><button class="btn light hidden" id="logout">Se déconnecter</button></div>
+    <div id="changeEmailBox">
+  <h3>Modifier mon adresse e-mail</h3>
+  <label for="newEmail">Nouvelle adresse e-mail</label>
+  <input id="newEmail" type="email"
+         placeholder="Nouvelle adresse e-mail">
+  <button class="btn" id="changeEmail">
+    Modifier mon adresse
+  </button>
+    </div>
   </section>
 
   <section id="vendeur" class="panel">
@@ -157,6 +166,34 @@ async function refreshAccount(){
 async function signup(){const email=$("email").value.trim(),password=$("password").value;if(!email||password.length<6){notify("Saisissez un e-mail valide et un mot de passe d’au moins 6 caractères.",true);return;}const {error}=await db.auth.signUp({email,password});if(error)notify(error.message,true);else notify("Inscription envoyée. Vérifiez votre e-mail si la confirmation est demandée.");}
 async function login(){const {error}=await db.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});if(error)notify(error.message,true);else notify("Connexion réussie.");}
 async function logout(){const {error}=await db.auth.signOut();if(error)notify(error.message,true);else notify("Vous êtes déconnecté.");}
+  async function changeEmail(){
+  if(!currentUser){
+    notify("Connectez-vous d'abord.",true);
+    return;
+  }
+
+  const newEmail=$("newEmail").value.trim();
+
+  if(!newEmail || !newEmail.includes("@")){
+    notify("Saisissez une adresse e-mail valide.",true);
+    return;
+  }
+
+  if(newEmail===currentUser.email){
+    notify("Cette adresse est déjà utilisée.",true);
+    return;
+  }
+
+  const {error}=await db.auth.updateUser({
+    email:newEmail
+  });
+
+  if(error){
+    notify("Erreur : "+error.message,true);
+  }else{
+    notify("Demande envoyée. Vérifiez vos e-mails pour confirmer le changement.");
+  }
+  }
 async function createStore(){
   if(!currentUser){notify("Connectez-vous avant de demander l’ouverture d’une boutique.",true);return;}
   const name=$("storeName").value.trim();if(!name){notify("Saisissez le nom de votre boutique.",true);return;}
@@ -173,6 +210,7 @@ async function loadAdmin(){
 }
 async function approve(table,id){const {error}=await db.from(table).update({status:"active"}).eq("id",id);if(error)notify("Approbation impossible : "+error.message,true);else{notify("Élément approuvé.");await loadAdmin();await loadProducts();}}
 $("signup").addEventListener("click",()=>signup());$("login").addEventListener("click",()=>login());$("logout").addEventListener("click",()=>logout());$("createStore").addEventListener("click",()=>createStore());$("refreshAdmin").addEventListener("click",()=>loadAdmin());
+  $("changeEmail").addEventListener("click",()=>changeEmail());
 $("search").addEventListener("input",renderProducts);$("categoryFilter").addEventListener("change",renderProducts);$("resetFilter").addEventListener("click",()=>{$("search").value="";$("categoryFilter").value="";renderProducts();});
 $("clearCart").addEventListener("click",()=>{cart=[];renderCart();});
 start().catch(e=>notify("Erreur de démarrage : "+e.message,true));
