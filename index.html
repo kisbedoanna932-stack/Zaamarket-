@@ -188,12 +188,37 @@ function renderProducts(){
 function addToCart(id){const p=allProducts.find(x=>x.id===id);if(!p)return;const found=cart.find(x=>x.id===id);if(found)found.quantity++;else cart.push({id:p.id,name:p.name,price:Number(p.price),quantity:1});renderCart();}
 function renderCart(){$("cartCount").textContent=cart.reduce((s,x)=>s+x.quantity,0);$("cartItems").innerHTML=cart.length?cart.map(x=>`<p>${escapeHtml(x.name)} × ${x.quantity} — ${money(x.price*x.quantity)} FCFA <button class="btn light" data-remove="${x.id}">Retirer</button></p>`).join(""):"Votre panier est vide.";$("cartTotal").textContent=money(cart.reduce((s,x)=>s+x.price*x.quantity,0));document.querySelectorAll("[data-remove]").forEach(b=>b.addEventListener("click",()=>{cart=cart.filter(x=>x.id!==b.dataset.remove);renderCart();}));}
 async function refreshAccount(){
-  $("accountStatus").textContent=currentUser?"Connecté : "+currentUser.email:"Vous n’êtes pas connecté.";
-  $("logout").classList.toggle("hidden",!currentUser);
-  if(!db||!currentUser){$("admin").classList.add("hidden");return;}
-  const {data}=await db.from("app_admins").select("user_id").eq("user_id",currentUser.id).maybeSingle();
-  $("admin").classList.toggle("hidden",!data);
-  if(data)await loadAdmin();
+  $("accountStatus").textContent = currentUser
+    ? "Connecté : " + currentUser.email
+    : "Vous n’êtes pas connecté.";
+
+  $("logout").classList.toggle("hidden", !currentUser);
+
+  if(!db || !currentUser){
+    $("admin").classList.add("hidden");
+    return;
+  }
+
+  const {data,error} = await db
+    .from("app_admins")
+    .select("user_id")
+    .eq("user_id", currentUser.id)
+    .maybeSingle();
+
+  if(error){
+    $("admin").classList.add("hidden");
+    notify("Erreur de vérification administrateur : " + error.message, true);
+    return;
+  }
+
+  $("admin").classList.toggle("hidden", !data);
+
+  if(data){
+    notify("Compte administrateur reconnu !");
+    await loadAdmin();
+  }else{
+    notify("Compte connecté, mais non reconnu comme administrateur.", true);
+  }
 }
 async function signup(){const email=$("email").value.trim(),password=$("password").value;if(!email||password.length<6){notify("Saisissez un e-mail valide et un mot de passe d’au moins 6 caractères.",true);return;}const {error}=await db.auth.signUp({email,password});if(error)notify(error.message,true);else notify("Inscription envoyée. Vérifiez votre e-mail si la confirmation est demandée.");}
 async function login(){const {error}=await db.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});if(error)notify(error.message,true);else notify("Connexion réussie.");}
