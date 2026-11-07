@@ -94,7 +94,39 @@
     <label for="storeCountry">Pays</label><select id="storeCountry"><option>Burkina Faso</option><option>Bénin</option><option>Côte d’Ivoire</option><option>Ghana</option><option>Mali</option><option>Niger</option><option>Sénégal</option><option>Togo</option><option>Autre pays d’Afrique de l’Ouest</option></select>
     <button class="btn" id="createStore">Envoyer ma demande</button>
   </section>
+<section id="vendeurDashboard" class="panel hidden">
+  <h2>Mon espace vendeur</h2>
+  <p class="muted">Gérez les produits de votre boutique Zaamarket.</p>
 
+  <div id="vendorStoreInfo"></div>
+
+  <h3>Ajouter un produit</h3>
+
+  <label for="productName">Nom du produit</label>
+  <input id="productName" placeholder="Exemple : Baskets homme">
+
+  <label for="productDescription">Description</label>
+  <textarea id="productDescription" placeholder="Description du produit"></textarea>
+
+  <label for="productPrice">Prix en FCFA</label>
+  <input id="productPrice" type="number" min="1" placeholder="5000">
+
+  <label for="productCategory">Catégorie</label>
+  <select id="productCategory">
+    <option value="">Choisir une catégorie</option>
+  </select>
+
+  <label for="productImage">Lien de la photo</label>
+  <input id="productImage" type="url" placeholder="https://...">
+
+  <label for="productStock">Stock disponible</label>
+  <input id="productStock" type="number" min="0" value="1">
+
+  <button class="btn" id="addProduct">Envoyer le produit</button>
+
+  <h3>Mes produits</h3>
+  <div id="vendorProducts">Chargement...</div>
+</section>
   <section id="admin" class="panel hidden">
     <h2>Administration</h2>
     <p class="muted">Cette zone apparaît uniquement pour un compte enregistré dans la table app_admins.</p>
