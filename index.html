@@ -259,32 +259,6 @@ async function approve(table,id){
   }
 }
 </script>
-  $("signup").addEventListener("click",()=>signup());
-$("login").addEventListener("click",()=>login());
-$("logout").addEventListener("click",()=>logout());
-$("createStore").addEventListener("click",()=>createStore());
-$("refreshAdmin").addEventListener("click",()=>loadAdmin());
-$("changeEmail").addEventListener("click",()=>changeEmail());
-
-$("search").addEventListener("input",renderProducts);
-$("categoryFilter").addEventListener("change",renderProducts);
-$("resetFilter").addEventListener("click",()=>{
-  $("search").value="";
-  $("categoryFilter").value="";
-  renderProducts();
-});
-
-$("clearCart").addEventListener("click",()=>{
-  cart=[];
-  renderCart();
-});
-
-start().catch(e=>notify("Erreur de démarrage : "+e.message,true));
-
-if("serviceWorker" in navigator && location.protocol.startsWith("http")){
-  window.addEventListener("load",()=>{
-    navigator.serviceWorker.register("./service-worker.js").catch(()=>{});
-  });
-}
+  
 </body>
 </html>
