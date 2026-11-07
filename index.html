@@ -231,9 +231,9 @@ async function logout(){const {error}=await db.auth.signOut();if(error)notify(er
 
   const newEmail=$("newEmail").value.trim();
 
-  if(!newEmail || !newEmail.includes("@")){
-    notify("Saisissez une adresse e-mail valide.",true);
-    return;
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newEmail)){
+  notify("Saisissez une adresse e-mail valide.",true);
+  return;
   }
 
   if(newEmail===currentUser.email){
