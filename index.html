@@ -223,33 +223,34 @@ async function refreshAccount(){
 async function signup(){const email=$("email").value.trim(),password=$("password").value;if(!email||password.length<6){notify("Saisissez un e-mail valide et un mot de passe d’au moins 6 caractères.",true);return;}const {error}=await db.auth.signUp({email,password});if(error)notify(error.message,true);else notify("Inscription envoyée. Vérifiez votre e-mail si la confirmation est demandée.");}
 async function login(){const {error}=await db.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});if(error)notify(error.message,true);else notify("Connexion réussie.");}
 async function logout(){const {error}=await db.auth.signOut();if(error)notify(error.message,true);else notify("Vous êtes déconnecté.");}
-  async function changeEmail(){
-  if(!currentUser){
-    notify("Connectez-vous d'abord.",true);
+async function changerEmail() {
+  if (!currentUser) {
+    notify("Connectez-vous d'abord.", true);
     return;
   }
 
-  const newEmail=$("newEmail").value.trim();
+  const nouveauEmail = $("newEmail").value.trim();
 
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newEmail)){
-  notify("Saisissez une adresse e-mail valide.",true);
-  return;
-  }
-
-  if(newEmail===currentUser.email){
-    notify("Cette adresse est déjà utilisée.",true);
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(nouveauEmail)) {
+    notify("Saisissez une adresse e-mail valide.", true);
     return;
   }
 
-  const {error}=await db.auth.updateUser({
-    email:newEmail
+  if (nouveauEmail === currentUser.email) {
+    notify("Cette adresse est déjà utilisée.", true);
+    return;
+  }
+
+  const { error } = await supabase.auth.updateUser({
+    email: nouveauEmail
   });
 
-  if(error){
-    notify("Erreur : "+error.message,true);
-  }else{
+  if (error) {
+    notify("Erreur : " + error.message, true);
+  } else {
     notify("Demande envoyée. Vérifiez vos e-mails pour confirmer le changement.");
   }
+}
   }
 async function createStore(){
   if(!currentUser){notify("Connectez-vous avant de demander l’ouverture d’une boutique.",true);return;}
