@@ -251,7 +251,7 @@ async function changerEmail() {
     notify("Demande envoyée. Vérifiez votre nouvelle adresse e-mail pour confirmer le changement.");
   }
 }
-  }
+
 async function createStore(){
   if(!currentUser){notify("Connectez-vous avant de demander l’ouverture d’une boutique.",true);return;}
   const name=$("storeName").value.trim();if(!name){notify("Saisissez le nom de votre boutique.",true);return;}
