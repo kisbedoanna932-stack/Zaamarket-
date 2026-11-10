@@ -246,7 +246,7 @@ async function changerEmail() {
   });
 
   if (error) {
-    notify("Erreur : " + error.message, true);
+  notify("Adresse saisie : " + nouveauEmail + " | Erreur : " + error.message, true);
   } else {
     notify("Demande envoyée. Vérifiez votre nouvelle adresse e-mail pour confirmer le changement.");
   }
