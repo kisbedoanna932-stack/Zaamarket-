@@ -236,19 +236,19 @@ async function changerEmail() {
     return;
   }
 
-  if (nouveauEmail === currentUser.email) {
+  if (nouveauEmail.toLowerCase() === currentUser.email.toLowerCase()) {
     notify("Cette adresse est déjà utilisée.", true);
     return;
   }
 
-  const { error } = await supabase.auth.updateUser({
+  const { data, error } = await db.auth.updateUser({
     email: nouveauEmail
   });
 
   if (error) {
     notify("Erreur : " + error.message, true);
   } else {
-    notify("Demande envoyée. Vérifiez vos e-mails pour confirmer le changement.");
+    notify("Demande envoyée. Vérifiez votre nouvelle adresse e-mail pour confirmer le changement.");
   }
 }
   }
@@ -290,7 +290,7 @@ $("login").addEventListener("click",()=>login());
 $("logout").addEventListener("click",()=>logout());
 $("createStore").addEventListener("click",()=>createStore());
 $("refreshAdmin").addEventListener("click",()=>loadAdmin());
-$("changeEmail").addEventListener("click",()=>changeEmail());
+$("changeEmail").addEventListener("click", changerEmail);
 
 $("search").addEventListener("input",renderProducts);
 $("categoryFilter").addEventListener("change",renderProducts);
